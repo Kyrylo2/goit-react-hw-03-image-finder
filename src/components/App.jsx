@@ -1,16 +1,37 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { Component } from 'react';
+import Modal from './Modal';
+
+// import styled from '@emotion/styled';
+
+class App extends Component {
+  state = {
+    showModal: false,
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
+  render() {
+    const { showModal } = this.state;
+
+    return (
+      <div>
+        <button type="button" onClick={this.toggleModal}>
+          Open modal
+        </button>
+
+        {showModal && (
+          <Modal
+            src={'https://kor.ill.in.ua/m/610x385/2722809.jpg'}
+            onClose={this.toggleModal}
+          />
+        )}
+      </div>
+    );
+  }
+}
+
+export default App;
