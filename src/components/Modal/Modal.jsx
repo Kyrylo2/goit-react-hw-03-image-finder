@@ -52,9 +52,13 @@ export default class Modal extends Component {
     if (e.code === 'Escape') this.props.onClose();
   };
 
+  handleBackDrop = e => {
+    if (e.currentTarget === e.target) this.props.onClose();
+  };
+
   render() {
     return createPortal(
-      <OverlayDiv onClick={this.props.onClose}>
+      <OverlayDiv onClick={this.handleBackDrop}>
         <ModalImg src={this.props.src} alt="img" />
       </OverlayDiv>,
       modalRoot

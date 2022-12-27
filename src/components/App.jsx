@@ -6,6 +6,7 @@ import Modal from './Modal';
 class App extends Component {
   state = {
     showModal: false,
+    modalImg: 'https://kor.ill.in.ua/m/610x385/2722809.jpg',
   };
 
   toggleModal = () => {
@@ -24,10 +25,7 @@ class App extends Component {
         </button>
 
         {showModal && (
-          <Modal
-            src={'https://kor.ill.in.ua/m/610x385/2722809.jpg'}
-            onClose={this.toggleModal}
-          />
+          <Modal src={this.state.modalImg} onClose={this.toggleModal} />
         )}
       </div>
     );
