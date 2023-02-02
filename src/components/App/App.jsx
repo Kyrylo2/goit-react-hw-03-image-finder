@@ -32,40 +32,41 @@ export default class App extends Component {
       prevState.inputValue !== inputValue ||
       prevState.currentPage !== currentPage
     ) {
-      this.setState({ spinner: true });
+      try {
+        this.setState({ spinner: true });
 
-      const data = await this.getPictures();
-      console.log(data);
+        const data = await this.getPictures();
 
-      const { hits, totalHits } = data;
+        const { hits, totalHits } = data;
 
-      this.setState(prevState => ({
-        pictures: [...prevState.pictures, ...hits],
-      }));
+        this.setState(prevState => ({
+          pictures: [...prevState.pictures, ...hits],
+        }));
 
-      if (currentPage === 1) {
-        toast.success(`Hooray! We found ${totalHits} images`);
-        window.scroll(0, 0);
-      }
+        if (currentPage === 1) {
+          toast.success(`Wow! We found ${totalHits} pictures`);
+          window.scroll(0, 0);
+        }
 
-      const totalPages = Math.ceil(totalHits / picturesPerPage);
-      this.setState({ totalPages });
-      console.log(`Total pages: ${totalPages}`);
+        const totalPages = Math.ceil(totalHits / picturesPerPage);
+        this.setState({ totalPages });
 
-      if (totalPages > 1 || currentPage < totalPages)
-        this.setState({ loadingMoreButtonVisibility: true });
+        if (totalPages > 1 || currentPage < totalPages)
+          this.setState({ loadingMoreButtonVisibility: true });
 
-      if (currentPage >= totalPages) {
-        this.setState({ loadingMoreButtonVisibility: false });
-        toast.info(
-          `You have looked at all the countries in your query "${inputValue}". Please start your search from the beginning`
-        );
+        if (currentPage >= totalPages) {
+          this.setState({ loadingMoreButtonVisibility: false });
+          toast.info(
+            `You have looked at all the countries in your query "${inputValue}". Please start your search from the beginning`
+          );
+        }
+      } catch (e) {
+        toast.error(e.message);
       }
     }
   }
 
   handleFormSubmit = inputData => {
-    console.log('Submit input data', inputData);
     if (inputData !== this.state.inputValue || inputData.trim() !== '') {
       this.setState({
         inputValue: inputData,
@@ -74,7 +75,6 @@ export default class App extends Component {
         loadingMoreButtonState: false,
         LoadingMoreButtonVisibility: false,
       });
-      console.log('inputValue changed and set to state');
     }
   };
 
@@ -94,19 +94,12 @@ export default class App extends Component {
   };
 
   handleOnFetchPicturesData = pictures => {
-    console.log('Update picture data in state');
     this.setState(prevState => ({
       pictures: [...prevState.pictures, ...pictures],
     }));
   };
 
-  // handleChangeStatus = statusProp => {
-  //   console.log('change status', statusProp);
-  //   this.setState({ status: statusProp });
-  // };
-
   handleLoadingMoreButton = async () => {
-    console.log('Loading More...');
     this.setState({ LoadingMoreButton: true });
     this.setState(prevState => ({
       currentPage: prevState.currentPage + 1,
@@ -127,15 +120,9 @@ export default class App extends Component {
   };
 
   handleImagePicked = (fullImage, imageTags) => {
-    console.log(`Image data in state`);
     this.setState({ fullImage, imageTags });
     this.toggleModal();
   };
-
-  // resetImagePicker = () => {
-  //   console.log(`Image data reset`);
-  //   this.setState({ fullImage: null, imageTags: null });
-  // };
 
   render() {
     const {
@@ -174,7 +161,7 @@ export default class App extends Component {
             resetImagePicker={this.resetImagePicker}
           />
         )}
-        <ToastContainer />
+        <ToastContainer theme="dark" />
       </AppContainer>
     );
     // }

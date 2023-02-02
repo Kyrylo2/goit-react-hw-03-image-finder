@@ -13,7 +13,7 @@ const Spinner = ({ isActive }) => {
   return (
     <PropagateLoader
       cssOverride={override}
-      color="#d73636"
+      color="#9c27b0"
       loading={isActive}
     />
   );

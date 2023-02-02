@@ -6,7 +6,6 @@ const LoadingMoreButton = ({ onClick, buttonState }) => {
   return (
     <LoadingButton
       loading={buttonState}
-      // loadingIndicator="Loading…"
       loadingPosition="start"
       color="secondary"
       variant="contained"

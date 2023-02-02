@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
 
-/*
- * Стили компонента ImageGallery
- */
 export const ImageGalleryUl = styled.ul`
   display: grid;
   max-width: calc(100vw - 48px);
