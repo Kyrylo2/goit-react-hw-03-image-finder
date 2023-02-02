@@ -17,14 +17,12 @@ export default class Modal extends Component {
   handleKeyDown = e => {
     if (e.code === 'Escape') {
       this.props.onClose();
-      this.props.resetImagePicker();
     }
   };
 
   handleBackDrop = e => {
     if (e.currentTarget === e.target) {
       this.props.onClose();
-      this.props.resetImagePicker();
     }
   };
 

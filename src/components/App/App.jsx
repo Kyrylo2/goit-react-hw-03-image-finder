@@ -158,7 +158,6 @@ export default class App extends Component {
             activeImage={fullImage}
             activeTags={altTags}
             onClose={this.toggleModal}
-            resetImagePicker={this.resetImagePicker}
           />
         )}
         <ToastContainer theme="dark" />
