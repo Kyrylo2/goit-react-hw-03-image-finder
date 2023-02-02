@@ -1,36 +1,44 @@
-import { Component } from 'react';
-
 import {
   ImageGalleryItemLi,
   ImageGalleryItemImage,
 } from './ImageGalleryItem.styled.js';
 
-export default class ImageGalleryItem extends Component {
-  state = {
-    picturesArr: this.props.picturesArray,
-  };
+const ImageGallery = ({
+  id,
+  webformatURL,
+  largeImageURL,
+  tags,
+  onImageClick,
+}) => {
+  // state = {
+  //   pictures: [],
+  // };
 
-  handleImagePicked = (fullImage, imageTags) => {
-    console.log(`Image clicked`, fullImage, imageTags);
-    this.props.onImageClick(fullImage, imageTags);
-  };
+  // componentDidUpdate(prevProps, _) {
+  //   console.log('prevState.pictures', prevProps.pictures);
+  //   console.log('this.props.pictures', this.props.pictures);
 
-  render() {
-    const picturesArr = this.props.picturesArray;
-    return (
-      <>
-        {picturesArr.map(({ id, webformatURL, tags, largeImageURL }) => {
-          return (
-            <ImageGalleryItemLi key={id}>
-              <ImageGalleryItemImage
-                src={webformatURL}
-                alt={tags}
-                onClick={() => this.handleImagePicked(largeImageURL, tags)}
-              />
-            </ImageGalleryItemLi>
-          );
-        })}
-      </>
-    );
-  }
-}
+  //   // this.setState({ pictures: this.props.pictures });
+  // }
+
+  // handleImagePicked = (fullImage, imageTags) => {
+  //   console.log(`Image clicked`, fullImage, imageTags);
+  //   this.props.onImageClick(fullImage, imageTags);
+  // };
+
+  return (
+    <ImageGalleryItemLi key={id}>
+      <ImageGalleryItemImage
+        src={webformatURL}
+        alt={tags}
+        onClick={() => {
+          console.log('Image clicked');
+          return onImageClick(largeImageURL, tags);
+        }}
+        loading="lazy"
+      />
+    </ImageGalleryItemLi>
+  );
+};
+
+export default ImageGallery;

@@ -9,12 +9,12 @@ const override = {
   borderColor: 'red',
 };
 
-const Spinner = ({ isActive, request }) => {
+const Spinner = ({ isActive }) => {
   return (
     <PropagateLoader
       cssOverride={override}
       color="#d73636"
-      // loading={isActive}
+      loading={isActive}
     />
   );
 };
