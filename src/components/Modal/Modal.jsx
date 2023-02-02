@@ -22,17 +22,6 @@ const ModalImg = styled.img`
   max-width: 500px;
 `;
 
-// const ModalText = styled.p`
-//   margin: auto;
-//   display: block;
-//   width: 80%;
-//   max-width: 700px;
-//   text-align: center;
-//   color: #ccc;
-//   padding: 10px 0;
-//   height: 150px;
-// `;
-
 const modalRoot = document.querySelector('#modal--root');
 
 export default class Modal extends Component {
@@ -43,23 +32,30 @@ export default class Modal extends Component {
   }
 
   componentWillUnmount() {
-    console.log('Modal Component updated');
+    console.log('Modal Component unmounted');
 
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = e => {
-    if (e.code === 'Escape') this.props.onClose();
+    if (e.code === 'Escape') {
+      this.props.onClose();
+      this.props.resetImagePicker();
+    }
   };
 
   handleBackDrop = e => {
-    if (e.currentTarget === e.target) this.props.onClose();
+    if (e.currentTarget === e.target) {
+      this.props.onClose();
+      this.props.resetImagePicker();
+    }
   };
 
   render() {
+    console.log('rendering');
     return createPortal(
       <OverlayDiv onClick={this.handleBackDrop}>
-        <ModalImg src={this.props.src} alt="img" />
+        <ModalImg src={this.props.activeImage} alt="img" />
       </OverlayDiv>,
       modalRoot
     );
