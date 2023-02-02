@@ -3,35 +3,32 @@ import { createPortal } from 'react-dom';
 import styled from '@emotion/styled';
 
 const OverlayDiv = styled.div`
+  overflow-y: scroll;
+  position: fixed;
   display: flex;
-  position: absolute;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
-  width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 1;
+  transition: opacity 250ms var(--timing-function),
+    visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1200;
 `;
 
 const ModalImg = styled.img`
+  width: 100%;
+  max-width: 700px;
   height: auto;
   margin: auto;
   display: block;
-
-  max-width: 500px;
+  z-index: 1300;
 `;
-
-// const ModalText = styled.p`
-//   margin: auto;
-//   display: block;
-//   width: 80%;
-//   max-width: 700px;
-//   text-align: center;
-//   color: #ccc;
-//   padding: 10px 0;
-//   height: 150px;
-// `;
 
 const modalRoot = document.querySelector('#modal--root');
 
@@ -43,23 +40,35 @@ export default class Modal extends Component {
   }
 
   componentWillUnmount() {
-    console.log('Modal Component updated');
+    console.log('Modal Component unmounted');
 
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = e => {
-    if (e.code === 'Escape') this.props.onClose();
+    if (e.code === 'Escape') {
+      this.props.onClose();
+      this.props.resetImagePicker();
+    }
   };
 
   handleBackDrop = e => {
-    if (e.currentTarget === e.target) this.props.onClose();
+    if (e.currentTarget === e.target) {
+      this.props.onClose();
+      this.props.resetImagePicker();
+    }
   };
 
   render() {
+    console.log('rendering');
     return createPortal(
-      <OverlayDiv onClick={this.handleBackDrop}>
-        <ModalImg src={this.props.src} alt="img" />
+      <OverlayDiv
+        onClick={e => {
+          this.handleBackDrop(e);
+          // this.props.resetImagePicker();
+        }}
+      >
+        <ModalImg src={this.props.activeImage} alt={this.props.activeTags} />
       </OverlayDiv>,
       modalRoot
     );
