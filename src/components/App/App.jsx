@@ -61,20 +61,29 @@ export default class App extends Component {
           );
         }
       } catch (e) {
-        toast.error(e.message);
+        if (this.state.loadingMoreButtonVisibility === true)
+          this.setState({ loadingMoreButtonVisibility: false });
+
+        toast.info(e.message);
       }
     }
   }
 
+  updateState = (inputValue = '') => {
+    this.setState({
+      inputValue: inputValue,
+      pictures: [],
+      currentPage: 1,
+      loadingMoreButtonState: false,
+      LoadingMoreButtonVisibility: false,
+    });
+  };
+
   handleFormSubmit = inputData => {
-    if (inputData !== this.state.inputValue || inputData.trim() !== '') {
-      this.setState({
-        inputValue: inputData,
-        pictures: [],
-        currentPage: 1,
-        loadingMoreButtonState: false,
-        LoadingMoreButtonVisibility: false,
-      });
+    if (inputData !== this.state.inputValue && inputData.trim() !== '') {
+      this.updateState(inputData);
+    } else {
+      return toast.warn('New input must be different from existing!');
     }
   };
 
@@ -85,9 +94,11 @@ export default class App extends Component {
         this.state.inputValue,
         this.state.currentPage,
         this.state.picturesPerPage
+        // this.updateState
       );
     } catch (e) {
-      toast.error(e.message);
+      // this.updateState();
+      throw new Error(e.message);
     } finally {
       this.setState({ spinner: false });
     }
@@ -160,7 +171,7 @@ export default class App extends Component {
             onClose={this.toggleModal}
           />
         )}
-        <ToastContainer theme="dark" />
+        <ToastContainer theme="dark" newestOnTop />
       </AppContainer>
     );
     // }

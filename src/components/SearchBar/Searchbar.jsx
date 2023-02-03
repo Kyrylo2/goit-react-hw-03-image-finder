@@ -25,7 +25,7 @@ export default class Searchbar extends Component {
     if (this.state.input.trim() === '') {
       return toast.warn('Please enter a valid input');
     }
-    this.props.onSubmit('');
+    // this.props.onSubmit('');
     this.props.onSubmit(this.state.input);
     this.setState({ input: '' });
   };
