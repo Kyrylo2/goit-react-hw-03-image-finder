@@ -23,7 +23,7 @@ export const SearchbarContainer = styled.header`
 
   background: linear-gradient(215deg, deepskyblue, darkviolet, blue);
   background-size: 180% 180%;
-  animation: gradient-animation 21s ease infinite;
+  animation: gradient-animation 5s ease-in-out infinite;
 
   @keyframes gradient-animation {
     0% {
